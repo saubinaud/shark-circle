@@ -1,6 +1,6 @@
 /**
  * Hero Section — Think Different / Apple x YC Style
- * Intense, bold "Pitch" focus. De todos para todos.
+ * Intense, bold "Pitch" focus. Multi-layered Parallax.
  */
 
 import { useParallax } from '../hooks/useParallax';
@@ -24,13 +24,13 @@ export default function Hero() {
             id="hero"
             className="relative w-full min-h-[100dvh] flex items-center md:items-end justify-start px-6 py-20 md:p-16 lg:p-24 overflow-hidden bg-ink"
         >
-            {/* ===== Parallax Background Image ===== */}
-            <div className="absolute inset-0 overflow-hidden">
+            {/* ===== Layer 1: Parallax Background Image ===== */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <img
                     src="/hero-bg.png"
                     alt="Startup pitch event"
-                    className="absolute inset-x-0 bottom-0 w-full h-[120%] object-cover mix-blend-luminosity opacity-40 scale-105"
-                    data-parallax-speed="0.2"
+                    className="absolute inset-x-0 bottom-0 w-full h-[125%] object-cover mix-blend-luminosity opacity-40 scale-[1.05]"
+                    data-parallax-speed="0.25" // Moves downward relatively on scroll
                 />
                 {/* Deep cinematic gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-transparent" />
@@ -38,8 +38,11 @@ export default function Hero() {
                 <div className="photo-grain" />
             </div>
 
-            {/* ===== Content ===== */}
-            <div className="relative z-10 w-full max-w-6xl mx-auto">
+            {/* ===== Layer 2: Parallax Content ===== */}
+            <div
+                className="relative z-10 w-full max-w-6xl mx-auto"
+                data-parallax-speed="-0.15" // Moves upward faster than scroll, creating 3D depth
+            >
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-12">
 
                     <div className="max-w-4xl">
@@ -51,12 +54,12 @@ export default function Hero() {
                         </div>
 
                         {/* Title */}
-                        <h1 className="fade-up text-[4rem] sm:text-7xl md:text-[6.5rem] lg:text-[8rem] font-extrabold text-white leading-[0.9] tracking-[-0.04em] mb-8">
+                        <h1 className="fade-up text-[4rem] sm:text-7xl md:text-[6.5rem] lg:text-[8rem] font-extrabold text-white leading-[0.9] tracking-[-0.04em] mb-6 md:mb-8">
                             Haz tu pitch.
                         </h1>
 
-                        {/* Subtitle - "Think Different" & Peer-to-peer vibe */}
-                        <p className="fade-up text-lg sm:text-[1.35rem] text-white/80 font-medium max-w-2xl leading-snug mb-0">
+                        {/* Subtitle - "Think Different" vibe */}
+                        <p className="fade-up text-lg sm:text-[1.35rem] text-white/80 font-medium max-w-2xl leading-snug mb-0 shadow-black drop-shadow-lg">
                             Para los locos, los inconformistas, los visionarios. Un espacio de feedback crudo y honesto donde no hay gurús ni expertos absolutos. Es de todos, para todos.
                         </p>
                     </div>
