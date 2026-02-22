@@ -1,5 +1,6 @@
 /**
- * RegistrationForm Section — Dynamic Focus 'Takeover' Experience
+ * RegistrationForm Section — Brutalist Form Restoration
+ * Restoring the 2-column split design with enhanced super-fuchsia/Y-Comb focus states.
  */
 
 import { useState, type FormEvent, type ChangeEvent } from 'react';
@@ -21,9 +22,6 @@ export default function RegistrationForm() {
         proyecto: '',
         participacion: '',
     });
-
-    // Track which input is focused for the takeover effect
-    const [focusedField, setFocusedField] = useState<string | null>(null);
 
     const charCount = formData.proyecto.length;
 
@@ -53,47 +51,45 @@ export default function RegistrationForm() {
 
     if (formState === 'success') {
         return (
-            <section ref={sectionRef} id="registro" className="px-6 py-32 md:py-48 bg-yc-orange text-white">
-                <div className="max-w-2xl mx-auto text-center fade-up">
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white text-yc-orange mb-8">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
+            <section ref={sectionRef} id="registro" className="px-6 py-20 md:py-32 bg-ink text-white">
+                <div className="max-w-2xl mx-auto text-center">
+                    <div className="fade-up visible border-4 border-yc-orange p-10 md:p-16 rounded-2xl bg-surface-dark">
+                        <h2 className="text-4xl sm:text-6xl font-extrabold mb-5 tracking-tight text-ink">
+                            Solicitud recibida.
+                        </h2>
+                        <p className="text-ink-muted text-lg sm:text-xl font-medium">
+                            Pronto nos pondremos en contacto contigo con los detalles de la próxima edición en Don Guto.
+                        </p>
                     </div>
-                    <h2 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-[-0.04em] leading-none">
-                        Solicitud recibida.
-                    </h2>
-                    <p className="text-white/90 text-xl font-medium max-w-lg mx-auto">
-                        Revisaremos tu perfil. Muy pronto nos pondremos en contacto contigo con tu confirmación.
-                    </p>
                 </div>
             </section>
         );
     }
 
-    // The wrapper dims when a field is focused
-    const isFormFocused = focusedField !== null;
+    // Brutalist Input Classes
+    const inputBaseStyle = "w-full px-5 py-4 bg-surface-muted border-2 border-border text-ink text-lg font-bold tracking-tight transition-all duration-200 outline-none";
+    const inputFocusStyle = "focus:bg-white focus:border-black focus:shadow-[4px_4px_0_0_#000] focus:-translate-y-1 focus:-translate-x-1";
 
     return (
-        <section ref={sectionRef} id="registro" className={`px-6 py-24 md:py-32 transition-colors duration-700 ${isFormFocused ? 'bg-ink' : 'bg-surface-muted'} text-ink`}>
-            <div className="max-w-4xl mx-auto">
+        <section ref={sectionRef} id="registro" className="px-6 py-16 md:py-24 bg-ink text-white">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-                {/* Animated Header */}
-                <div className={`transition-all duration-700 text-center mb-16 ${isFormFocused ? 'opacity-20 scale-95 blur-sm' : 'opacity-100 scale-100 blur-none'}`}>
-                    <h2 className={`text-6xl md:text-[6rem] font-extrabold tracking-[-0.05em] leading-[0.9] mb-4 ${isFormFocused ? 'text-white' : 'text-ink'}`}>
-                        Toma el micrófono.
+                {/* Copy side (Left) */}
+                <div className="flex flex-col justify-center">
+                    <h2 className="fade-up text-6xl md:text-[6rem] font-extrabold tracking-[-0.05em] leading-[0.9] mb-6 drop-shadow-lg">
+                        Toma el<br />micrófono.
                     </h2>
-                    <p className={`text-lg md:text-2xl font-medium max-w-2xl mx-auto ${isFormFocused ? 'text-white' : 'text-ink-muted'}`}>
-                        Prepara tu mejor pitch. Los cupos son muy reducidos.
+                    <p className="fade-up text-white/70 text-lg md:text-2xl font-medium leading-relaxed max-w-md">
+                        Si quieres presentar tu proyecto al mundo, o simplemente sentarte, escuchar y conocer a tu próxima tribu. Los cupos son muy reducidos.
                     </p>
                 </div>
 
-                {/* Form Takeover Container */}
-                <div className="relative fade-up">
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-8 md:gap-10">
+                {/* Form aside (Right) */}
+                <div className="fade-up bg-surface p-8 md:p-14 text-ink rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] border border-border/50">
+                    <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
 
-                        <div className={`transition-all duration-500 ${isFormFocused && focusedField !== 'nombre' ? 'opacity-30' : 'opacity-100'}`}>
-                            <label htmlFor="nombre" className={`block text-[11px] font-bold uppercase tracking-[0.2em] mb-2 ${isFormFocused ? 'text-yc-orange' : 'text-ink-muted'}`}>Nombre Completo</label>
+                        <div className="space-y-2">
+                            <label htmlFor="nombre" className="block text-xs font-extra-bold text-ink-muted uppercase tracking-[0.2em]">Nombre Completo</label>
                             <input
                                 type="text"
                                 id="nombre"
@@ -101,20 +97,14 @@ export default function RegistrationForm() {
                                 required
                                 value={formData.nombre}
                                 onChange={handleChange}
-                                onFocus={() => setFocusedField('nombre')}
-                                onBlur={() => setFocusedField(null)}
                                 placeholder="Steve Jobs"
-                                className={`w-full bg-transparent border-b-2 py-4 text-3xl md:text-5xl font-bold tracking-tight transition-all outline-none placeholder:text-ink/20
-                  ${isFormFocused
-                                        ? 'border-white/20 text-white focus:border-yc-orange focus:placeholder:text-white/10'
-                                        : 'border-ink/20 text-ink focus:border-black'}
-                `}
+                                className={`${inputBaseStyle} ${inputFocusStyle} rounded-lg`}
                             />
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-10">
-                            <div className={`transition-all duration-500 ${isFormFocused && focusedField !== 'email' ? 'opacity-30' : 'opacity-100'}`}>
-                                <label htmlFor="email" className={`block text-[11px] font-bold uppercase tracking-[0.2em] mb-2 ${isFormFocused ? 'text-yc-orange' : 'text-ink-muted'}`}>Email</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+                            <div className="space-y-2">
+                                <label htmlFor="email" className="block text-xs font-extra-bold text-ink-muted uppercase tracking-[0.2em]">Email</label>
                                 <input
                                     type="email"
                                     id="email"
@@ -122,16 +112,12 @@ export default function RegistrationForm() {
                                     required
                                     value={formData.email}
                                     onChange={handleChange}
-                                    onFocus={() => setFocusedField('email')}
-                                    onBlur={() => setFocusedField(null)}
                                     placeholder="steve@apple.com"
-                                    className={`w-full bg-transparent border-b-2 py-4 text-2xl md:text-3xl font-bold tracking-tight transition-all outline-none placeholder:text-ink/20
-                    ${isFormFocused ? 'border-white/20 text-white focus:border-yc-orange' : 'border-ink/20 text-ink focus:border-black'}
-                  `}
+                                    className={`${inputBaseStyle} ${inputFocusStyle} rounded-lg`}
                                 />
                             </div>
-                            <div className={`transition-all duration-500 ${isFormFocused && focusedField !== 'whatsapp' ? 'opacity-30' : 'opacity-100'}`}>
-                                <label htmlFor="whatsapp" className={`block text-[11px] font-bold uppercase tracking-[0.2em] mb-2 ${isFormFocused ? 'text-yc-orange' : 'text-ink-muted'}`}>WhatsApp</label>
+                            <div className="space-y-2">
+                                <label htmlFor="whatsapp" className="block text-xs font-extra-bold text-ink-muted uppercase tracking-[0.2em]">WhatsApp</label>
                                 <input
                                     type="tel"
                                     id="whatsapp"
@@ -139,20 +125,16 @@ export default function RegistrationForm() {
                                     required
                                     value={formData.whatsapp}
                                     onChange={handleChange}
-                                    onFocus={() => setFocusedField('whatsapp')}
-                                    onBlur={() => setFocusedField(null)}
                                     placeholder="+51 999 999 999"
-                                    className={`w-full bg-transparent border-b-2 py-4 text-2xl md:text-3xl font-bold tracking-tight transition-all outline-none placeholder:text-ink/20
-                    ${isFormFocused ? 'border-white/20 text-white focus:border-yc-orange' : 'border-ink/20 text-ink focus:border-black'}
-                  `}
+                                    className={`${inputBaseStyle} ${inputFocusStyle} rounded-lg`}
                                 />
                             </div>
                         </div>
 
-                        <div className={`transition-all duration-500 ${isFormFocused && focusedField !== 'proyecto' ? 'opacity-30' : 'opacity-100'}`}>
-                            <label htmlFor="proyecto" className={`flex justify-between text-[11px] font-bold uppercase tracking-[0.2em] mb-2 ${isFormFocused ? 'text-yc-orange' : 'text-ink-muted'}`}>
+                        <div className="space-y-2">
+                            <label htmlFor="proyecto" className="flex justify-between items-center text-xs font-extra-bold text-ink-muted uppercase tracking-[0.2em]">
                                 <span>¿Qué estás construyendo?</span>
-                                <span className={`${charCount > MAX_DESCRIPTION_CHARS * 0.9 ? 'text-red-500' : ''}`}>
+                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${charCount > MAX_DESCRIPTION_CHARS * 0.9 ? 'bg-red-100 text-red-600' : 'bg-surface-dark text-ink'}`}>
                                     {charCount}/{MAX_DESCRIPTION_CHARS}
                                 </span>
                             </label>
@@ -162,60 +144,51 @@ export default function RegistrationForm() {
                                 required
                                 value={formData.proyecto}
                                 onChange={handleChange}
-                                onFocus={() => setFocusedField('proyecto')}
-                                onBlur={() => setFocusedField(null)}
-                                placeholder="Estoy construyendo un SaaS para..."
-                                className={`w-full bg-transparent border-b-2 py-4 text-2xl md:text-4xl font-bold tracking-tight transition-all outline-none min-h-[120px] resize-none placeholder:text-ink/20
-                  ${isFormFocused ? 'border-white/20 text-white focus:border-yc-orange focus:placeholder:text-white/10' : 'border-ink/20 text-ink focus:border-black'}
-                `}
+                                placeholder="Una breve descripción directa al grano."
+                                className={`${inputBaseStyle} ${inputFocusStyle} rounded-lg min-h-[120px] resize-none`}
                             />
                         </div>
 
-                        <div className={`transition-all duration-500 ${isFormFocused && focusedField !== 'participacion' ? 'opacity-30' : 'opacity-100'}`}>
-                            <label htmlFor="participacion" className={`block text-[11px] font-bold uppercase tracking-[0.2em] mb-2 ${isFormFocused ? 'text-yc-orange' : 'text-ink-muted'}`}>Rol en el evento</label>
-                            <select
-                                id="participacion"
-                                name="participacion"
-                                required
-                                value={formData.participacion}
-                                onChange={handleChange}
-                                onFocus={() => setFocusedField('participacion')}
-                                onBlur={() => setFocusedField(null)}
-                                className={`w-full bg-transparent border-b-2 py-4 text-xl md:text-2xl font-bold tracking-tight transition-all outline-none appearance-none cursor-pointer
-                  ${isFormFocused ? 'border-white/20 text-white focus:border-yc-orange' : 'border-ink/20 text-ink focus:border-black'}
-                `}
-                                style={{
-                                    // Safari/Chrome standard overriding for unstyled selects in dark mode
-                                    color: (isFormFocused && !formData.participacion) ? 'rgba(255,255,255,0.2)' : (isFormFocused ? 'white' : 'inherit')
-                                }}
-                            >
-                                <option value="" disabled className="text-black bg-white">Selecciona una opción</option>
-                                <option value="presentar" className="text-black bg-white">Quiero entrar al sorteo para hacer un Pitch</option>
-                                <option value="asistir" className="text-black bg-white">Solo quiero escuchar y aportar feedback</option>
-                                <option value="ambas" className="text-black bg-white">Me anoto a ambas</option>
-                            </select>
+                        <div className="space-y-2">
+                            <label htmlFor="participacion" className="block text-xs font-extra-bold text-ink-muted uppercase tracking-[0.2em]">Rol en el evento</label>
+                            <div className="relative">
+                                <select
+                                    id="participacion"
+                                    name="participacion"
+                                    required
+                                    value={formData.participacion}
+                                    onChange={handleChange}
+                                    className={`${inputBaseStyle} ${inputFocusStyle} rounded-lg appearance-none cursor-pointer pr-12`}
+                                >
+                                    <option value="" disabled>Selecciona una opción</option>
+                                    <option value="presentar">Quiero entrar al sorteo para hacer un Pitch</option>
+                                    <option value="asistir">Solo quiero escuchar y ser parte de la audiencia</option>
+                                    <option value="ambas">Abierto a ambas cosas</option>
+                                </select>
+                                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-ink">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                </div>
+                            </div>
                         </div>
 
                         {formState === 'error' && (
-                            <div className="bg-red-50 text-red-700 px-6 py-4 text-sm font-bold border-l-4 border-red-500 rounded-r-lg mt-4 shadow-sm">
-                                Hubo un error de conexión. Por favor, intenta enviar nuevamente.
+                            <div className="bg-red-50 text-red-700 px-6 py-4 text-sm font-bold border-l-4 border-red-500 rounded-r-lg shadow-sm">
+                                Hubo un error de conexión. Por favor, intenta de nuevo.
                             </div>
                         )}
 
-                        <div className={`transition-all duration-700 mt-8 ${isFormFocused ? 'opacity-100 translate-y-0' : 'opacity-90'}`}>
-                            <button
-                                type="submit"
-                                disabled={formState === 'submitting'}
-                                className="w-full bg-yc-orange text-white py-6 md:py-8 text-sm md:text-base font-extrabold uppercase tracking-[0.2em] rounded-2xl hover:scale-[1.02] active:scale-[0.98] hover:bg-yc-orange-hover transition-all flex items-center justify-center cursor-pointer shadow-xl shadow-yc-orange/20"
-                            >
-                                {formState === 'submitting' ? (
-                                    <span className="flex items-center gap-3">
-                                        <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                                        Enviando solicitud...
-                                    </span>
-                                ) : 'Enviar Aplicación'}
-                            </button>
-                        </div>
+                        <button
+                            type="submit"
+                            disabled={formState === 'submitting'}
+                            className="w-full bg-yc-orange text-white py-6 text-sm md:text-base font-extrabold uppercase tracking-[0.2em] rounded-xl hover:-translate-y-1 hover:shadow-[4px_4px_0_0_#FFF] hover:bg-yc-orange-hover border-2 border-transparent hover:border-white transition-all duration-300 flex items-center justify-center gap-3 mt-4 disabled:opacity-50 cursor-pointer active:translate-y-0 active:shadow-none"
+                        >
+                            {formState === 'submitting' ? (
+                                <>
+                                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                    Enviando...
+                                </>
+                            ) : 'Postular ahora'}
+                        </button>
 
                     </form>
                 </div>

@@ -1,6 +1,6 @@
 /**
- * ForWho Section — Bento Box & Expandable Modals
- * Highly visual representation of target audience.
+ * ForWho Section — Bento Box & Expandable Modals (Robust Mobile Fix)
+ * Uses grid-template-rows for clean, dynamic height expansion without absolute overlapping.
  */
 
 import { useState } from 'react';
@@ -73,15 +73,12 @@ export default function ForWho() {
                                 onClick={() => setActivePersona(isActive ? null : idx)}
                                 className={`
                   ${persona.colSpan} ${persona.bg} ${persona.text} 
-                  relative rounded-3xl p-8 md:p-12 overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
-                  hover:scale-[0.98] active:scale-[0.95] group
+                  relative rounded-3xl p-8 md:p-12 cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+                  hover:scale-[0.98] active:scale-[0.95] group overflow-hidden
                 `}
-                                style={{
-                                    minHeight: isActive ? '360px' : '280px' // Expand height gracefully
-                                }}
                             >
                                 {/* Plus Icon that rotates on active */}
-                                <div className="absolute top-6 right-6 md:top-8 md:right-8">
+                                <div className="absolute top-6 right-6 md:top-8 md:right-8 z-10">
                                     <span className={`flex items-center justify-center w-10 h-10 rounded-full bg-black/10 backdrop-blur-md transition-transform duration-500 ${isActive ? 'rotate-45' : 'group-hover:rotate-90'}`}>
                                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                                             <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -90,22 +87,26 @@ export default function ForWho() {
                                     </span>
                                 </div>
 
-                                <div className="h-full flex flex-col justify-end">
-                                    <h3 className="text-3xl md:text-4xl font-extrabold tracking-[-0.03em] mb-3 leading-tight pe-12">
-                                        {persona.title}
-                                    </h3>
+                                <div className="flex flex-col h-full justify-between">
+                                    <div className="mb-12" /> {/* Push content down to emulate previous bento sizing without fixed heights */}
+                                    <div>
+                                        <h3 className="text-3xl md:text-4xl font-extrabold tracking-[-0.03em] mb-4 leading-tight pe-12">
+                                            {persona.title}
+                                        </h3>
 
-                                    {/* Container for content switch */}
-                                    <div className="relative">
-                                        {/* Short Description (Fades out when active) */}
-                                        <p className={`text-lg md:text-xl font-medium opacity-80 transition-all duration-500 absolute top-0 left-0 w-full ${isActive ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
+                                        {/* The Short Description */}
+                                        <p className={`text-lg md:text-xl font-medium transition-opacity duration-300 ${isActive ? 'hidden' : 'block opacity-80'}`}>
                                             {persona.short}
                                         </p>
 
-                                        {/* Detailed Description (Fades in when active) */}
-                                        <p className={`text-base md:text-lg font-medium opacity-90 transition-all duration-500 delay-100 ${isActive ? 'opacity-100 translate-y-0 relative' : 'opacity-0 translate-y-4 absolute top-0 left-0 pointer-events-none'}`}>
-                                            {persona.description}
-                                        </p>
+                                        {/* The Expandable Details using grid-template-rows */}
+                                        <div className={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out ${isActive ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                                            <div className="overflow-hidden">
+                                                <p className="text-base md:text-lg font-medium opacity-90 pt-2">
+                                                    {persona.description}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
