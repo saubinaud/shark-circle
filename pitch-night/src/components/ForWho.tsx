@@ -1,6 +1,6 @@
 /**
- * ForWho Section — Startup / YC Style Accordion
- * Includes state management to expand descriptions.
+ * ForWho Section — Bento Box & Expandable Modals
+ * Highly visual representation of target audience.
  */
 
 import { useState } from 'react';
@@ -8,97 +8,112 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const personas = [
     {
-        title: 'Genios construyendo en las sombras',
-        description: 'Escribes código hasta las 3 AM. Tienes algo funcional pero no sabes cómo contarlo al mundo. Aquí te ayudaremos a pulir tu mensaje y entender el valor real de tu producto.'
+        title: 'Genios en las sombras',
+        short: 'Para los que escriben código hasta las 3 AM y tienen algo funcional.',
+        description: 'Tienes un producto increíble pero no sabes cómo contarlo al mundo. Aquí te ayudaremos a pulir tu mensaje, a salir de la cueva y a entender cómo otros perciben el valor real de lo que has construido.',
+        colSpan: 'lg:col-span-8',
+        bg: 'bg-surface-muted',
+        text: 'text-ink'
     },
     {
         title: 'Fundadores visionarios',
-        description: 'Ya tienes un MVP, tal vez un co-founder y tus primeros usuarios, pero te enfrentas a problemas de crecimiento y retención. Necesitas críticas directas para no estrellarte contra la pared.'
+        short: 'Para quienes ya tienen un MVP o primeros usuarios.',
+        description: 'Quizás ya tengas tu primer prototipo o estés ganando tracción. Aquí te enfrentas a críticas directas de otros founders para evitar que choques contra la pared y encuentres product-market fit más rápido.',
+        colSpan: 'lg:col-span-4',
+        bg: 'bg-ink',
+        text: 'text-white'
     },
     {
-        title: 'Desarrolladores armando side-projects',
-        description: 'Trabajas en corporativo de 9 a 6, pero los fines de semana construyes tus propios SaaS. Ven e inspírate para dar el salto, o encuentra a ese socio comercial que lleve tus ventas a otro nivel.'
+        title: 'Builders de fin de semana',
+        short: 'Para los que arman side-projects después del corporativo.',
+        description: 'Trabajas de 9 a 6, pero tu pasión está en tu side-project. Ven e inspírate para dar el salto definitivo, o encuentra a ese socio comercial que complemente tus habilidades técnicas llevando tus ventas a otro nivel.',
+        colSpan: 'lg:col-span-5',
+        bg: 'bg-yc-orange',
+        text: 'text-white'
     },
     {
-        title: 'Inconformistas con visión de cambio',
-        description: 'Ves industrias estancadas y sabes exactamente cómo romperlas. Presenta esa tesis disruptiva ante una audiencia de builders lista para desafiar tus suposiciones.'
-    },
-    {
-        title: 'Dispuestos a dar y recibir feedback',
-        description: 'No importa si no tienes una startup hoy. Si entiendes de producto, diseño o ventas, tu voz es vital. Ven a escuchar ideas, hacer preguntas incómodas y aportar valor a quien expone.'
+        title: 'Mentes críticas',
+        short: 'Para quienes no presentan hoy, pero saben dar feedback brutal.',
+        description: 'No importa si hoy no estás construyendo una startup. Si entiendes de producto, diseño o tienes visión de negocio, tu voz es vital. Ven a escuchar ideas, hacer preguntas difíciles y aportar valor a quien expone.',
+        colSpan: 'lg:col-span-7',
+        bg: 'bg-surface-dark',
+        text: 'text-ink'
     },
 ];
 
 export default function ForWho() {
     const sectionRef = useScrollAnimation();
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-    const toggleAccordion = (idx: number) => {
-        setOpenIndex(openIndex === idx ? null : idx);
-    };
+    const [activePersona, setActivePersona] = useState<number | null>(null);
 
     return (
-        <section ref={sectionRef} id="para-quien" className="px-6 py-20 md:py-28 bg-surface text-ink border-b border-border">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <section ref={sectionRef} id="para-quien" className="px-6 py-24 md:py-32 bg-surface text-ink border-b border-border">
+            <div className="max-w-6xl mx-auto">
 
-                {/* Title col (Sticky) */}
-                <div className="lg:col-span-4 relative">
-                    <div className="sticky top-28">
-                        <h2 className="fade-up text-5xl md:text-6xl font-extrabold tracking-[-0.04em] leading-[1.0] mb-5">
-                            ¿Para quién?
-                        </h2>
-                        <p className="fade-up font-serif text-xl md:text-2xl text-ink-muted italic leading-snug mb-6">
-                            "Para los locos, los inconformistas, los que ven el mundo diferente. Mentes inquietas conectando."
-                        </p>
-                        <p className="fade-up text-base text-ink font-medium leading-relaxed max-w-sm hidden lg:block">
-                            No es un panel de expertos. Es un espacio íntimo donde la inteligencia colectiva supera al individuo.
-                        </p>
-                    </div>
+                {/* Header */}
+                <div className="mb-16 md:mb-20 text-center">
+                    <h2 className="fade-up text-5xl md:text-7xl font-extrabold tracking-[-0.04em] leading-[0.9] mb-6">
+                        ¿Para quién?
+                    </h2>
+                    <p className="fade-up font-serif text-2xl md:text-3xl text-ink-muted italic max-w-3xl mx-auto mb-6">
+                        "Para los inconformistas. Para las mentes inquietas conectando."
+                    </p>
+                    <p className="fade-up text-lg text-ink font-medium max-w-2xl mx-auto">
+                        No es un panel de expertos dando cátedra. Es un espacio íntimo donde la inteligencia colectiva supera al individuo. Aquí todos somos estudiantes y maestros.
+                    </p>
                 </div>
 
-                {/* Accordion col */}
-                <div className="lg:col-span-8">
-                    <p className="fade-up text-lg text-ink font-medium leading-relaxed mb-8 block lg:hidden">
-                        No es un panel de expertos. Es un espacio íntimo donde la inteligencia colectiva supera al individuo.
-                    </p>
+                {/* Bento Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 fade-up">
+                    {personas.map((persona, idx) => {
+                        const isActive = activePersona === idx;
 
-                    <div className="fade-up flex flex-col gap-0 border-t-2 border-ink">
-                        {personas.map((persona, idx) => {
-                            const isOpen = openIndex === idx;
+                        return (
+                            <div
+                                key={idx}
+                                onClick={() => setActivePersona(isActive ? null : idx)}
+                                className={`
+                  ${persona.colSpan} ${persona.bg} ${persona.text} 
+                  relative rounded-3xl p-8 md:p-12 overflow-hidden cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+                  hover:scale-[0.98] active:scale-[0.95] group
+                `}
+                                style={{
+                                    minHeight: isActive ? '360px' : '280px' // Expand height gracefully
+                                }}
+                            >
+                                {/* Plus Icon that rotates on active */}
+                                <div className="absolute top-6 right-6 md:top-8 md:right-8">
+                                    <span className={`flex items-center justify-center w-10 h-10 rounded-full bg-black/10 backdrop-blur-md transition-transform duration-500 ${isActive ? 'rotate-45' : 'group-hover:rotate-90'}`}>
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                </div>
 
-                            return (
-                                <div key={idx} className="border-b border-border flex flex-col overflow-hidden">
-                                    <button
-                                        onClick={() => toggleAccordion(idx)}
-                                        className="flex items-center gap-4 py-6 md:py-8 w-full text-left group transition-all cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-yc-orange"
-                                    >
-                                        <span
-                                            className={`w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300
-                         ${isOpen
-                                                    ? 'bg-yc-orange text-white rotate-45'
-                                                    : 'bg-surface-dark text-ink-muted group-hover:bg-ink group-hover:text-white'}`}
-                                        >
-                                            +
-                                        </span>
-                                        <span className={`text-xl md:text-3xl font-extrabold tracking-[-0.02em] transition-colors duration-300 ${isOpen ? 'text-yc-orange' : 'group-hover:text-ink-light'}`}>
-                                            {persona.title}
-                                        </span>
-                                    </button>
+                                <div className="h-full flex flex-col justify-end">
+                                    <h3 className="text-3xl md:text-4xl font-extrabold tracking-[-0.03em] mb-3 leading-tight pe-12">
+                                        {persona.title}
+                                    </h3>
 
-                                    {/* Expanded Content */}
-                                    <div
-                                        className={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
-                                    >
-                                        <div className="overflow-hidden">
-                                            <p className="pl-12 pb-8 pr-4 text-ink-muted font-medium text-base md:text-lg leading-relaxed max-w-2xl">
-                                                {persona.description}
-                                            </p>
-                                        </div>
+                                    {/* Container for content switch */}
+                                    <div className="relative">
+                                        {/* Short Description (Fades out when active) */}
+                                        <p className={`text-lg md:text-xl font-medium opacity-80 transition-all duration-500 absolute top-0 left-0 w-full ${isActive ? 'opacity-0 translate-y-4 pointer-events-none' : 'opacity-100 translate-y-0'}`}>
+                                            {persona.short}
+                                        </p>
+
+                                        {/* Detailed Description (Fades in when active) */}
+                                        <p className={`text-base md:text-lg font-medium opacity-90 transition-all duration-500 delay-100 ${isActive ? 'opacity-100 translate-y-0 relative' : 'opacity-0 translate-y-4 absolute top-0 left-0 pointer-events-none'}`}>
+                                            {persona.description}
+                                        </p>
                                     </div>
                                 </div>
-                            );
-                        })}
-                    </div>
+
+                                {/* Subtle overlay accent */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                            </div>
+                        );
+                    })}
                 </div>
 
             </div>

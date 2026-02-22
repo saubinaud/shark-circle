@@ -74,10 +74,9 @@ export default function HowItWorks() {
                             >
                                 <div className="flex flex-col md:flex-row gap-6 md:gap-12 items-start relative z-10">
 
-                                    {/* Big Number / Badge with internal Parallax for a micro-interaction */}
+                                    {/* Big Number / Badge without internal parallax to prevent overlapping on mobile */}
                                     <div
                                         className="flex-shrink-0 w-16 h-16 md:w-24 md:h-24 rounded-2xl bg-surface-dark flex items-center justify-center font-extrabold text-2xl md:text-4xl tracking-tighter text-ink"
-                                        data-parallax-speed="0.05"
                                     >
                                         {step.number}
                                     </div>
