@@ -6,11 +6,10 @@
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const images = [
-    'https://images.unsplash.com/photo-1556761175-5973eafcd413?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1542626991-cbc4e32524cc?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=600',
-    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=600',
+    'https://winnerscircle369.com/cdn/shop/files/ewwwe.png', // Winners Circle official asset
+    'https://images.unsplash.com/photo-1556761175-5973eafcd413?auto=format&fit=crop&q=80&w=600', // Reemplazar con URL de Instagram
+    'https://images.unsplash.com/photo-1542626991-cbc4e32524cc?auto=format&fit=crop&q=80&w=600', // Reemplazar con URL de Instagram
+    'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=600', // Reemplazar con URL de Instagram
 ];
 
 export default function Gallery() {
