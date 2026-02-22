@@ -1,128 +1,85 @@
 /**
- * HowItWorks Section — Apple-style Sticky Scroll Engine
- * Highly immersive desktop and mobile experience.
+ * HowItWorks Section — Minimalist Typographic Timeline
+ * Inspired by Vercel/Stripe clean design. No messy borders or images.
+ * Pure focus on clarity, large typography, and flow.
  */
 
-import { useEffect, useRef, useState } from 'react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const steps = [
     {
         number: '01',
         title: 'Asegura tu silla',
-        description: 'Abrimos exactamente 30 plazas por sesión. Te registras para asegurar tu lugar en la audiencia, escuchar, y ser parte de la conversación.',
-        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200',
+        description: 'Aprobamos exactamente a 30 asistentes por sesión. Aplica para asegurar tu lugar en la audiencia, escuchar los pitches en vivo y sumar al debate.',
+        details: 'Queremos mentes activas, no oyentes pasivos. Al ser aceptado, confirmamos tu acceso a Café Don Guto.',
     },
     {
         number: '02',
-        title: 'El Sorteo',
-        description: 'De los 30 asistentes, sorteamos solo a 4 personas esa misma noche para que hagan su pitch. Si no te toca, tendrás más prioridad en la siguiente.',
-        image: 'https://images.unsplash.com/photo-1542626991-cbc4e32524cc?auto=format&fit=crop&q=80&w=1200',
+        title: 'Selección Justa',
+        description: 'De los 30 aceptados, sorteamos esa misma noche a 4 fundadores para que presenten.',
+        details: 'Hacerlo al azar garantiza igualdad. Dar mayor prioridad a quien lleva 3 ediciones asistiendo asegura justicia. Si no pitcheas hoy, tu turno llegará pronto.',
     },
     {
         number: '03',
         title: 'Tu Momento',
-        description: 'Tienes el escenario. Comparte en qué estás trabajando, tu visión, y recibe feedback brutalmente honesto y constructivo del grupo.',
-        image: 'https://images.unsplash.com/photo-1556761175-5973eafcd413?auto=format&fit=crop&q=80&w=1200',
+        description: 'Tienes el escenario y toda la atención. Comparte tu producto, tus métricas o la idea que te quita el sueño.',
+        details: 'No necesitas un deck corporativo perfecto. Puedes mostrar código, un Figma o hacer una demo en vivo. Demuestra ejecución.',
     },
     {
         number: '04',
-        title: 'De todos, para todos',
-        description: 'Aquí nadie es más que nadie. Todo el feedback vale, debatimos ideas y empujamos a los fundadores a pensar más en grande.',
-        image: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&q=80&w=1200',
+        title: 'Inteligencia Colectiva',
+        description: 'Crecemos atacando el problema. El feedback proviene del programador al fondo y del marquetero a tu derecha.',
+        details: 'Nadie es juez absoluto. Evaluamos vulnerabilidades en tu modelo y destrozamos o aplaudimos constructivamente tus hipótesis.',
     }
 ];
 
 export default function HowItWorks() {
     const sectionRef = useScrollAnimation();
-    const [activeStep, setActiveStep] = useState(0);
-    const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-    // Intersection Observer to track which text step is in the center of the screen
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const index = Number(entry.target.getAttribute('data-step-index'));
-                        setActiveStep(index);
-                    }
-                });
-            },
-            {
-                root: null,
-                rootMargin: '-40% 0px -40% 0px', // Trigger when element hits the vertical center 20% band
-                threshold: 0,
-            }
-        );
-
-        stepRefs.current.forEach((ref) => {
-            if (ref) observer.observe(ref);
-        });
-
-        return () => observer.disconnect();
-    }, []);
 
     return (
-        <section ref={sectionRef} id="como-funciona" className="relative bg-surface text-ink border-b border-border">
+        <section ref={sectionRef} id="como-funciona" className="px-6 py-24 md:py-32 bg-surface text-ink border-b border-border">
+            <div className="max-w-4xl mx-auto">
 
-            <div className="max-w-7xl mx-auto px-6 pt-24 pb-12">
-                <h2 className="fade-up text-5xl md:text-7xl font-extrabold tracking-[-0.04em] leading-[0.9] max-w-xl">
-                    La mecánica del evento.
-                </h2>
-                <p className="fade-up text-ink-muted text-lg mt-4 font-semibold max-w-md">
-                    Un formato diseñado para el intercambio real y sin filtros.
-                </p>
-            </div>
-
-            {/* 
-        APPLE-STYLE STICKY SCROLL 
-        Desktop: Left side sticky image, Right side scrolling text.
-        Mobile: Top sticky image (short), Bottom scrolling text.
-      */}
-            <div className="relative flex flex-col md:flex-row w-full max-w-7xl mx-auto px-6 pb-24 md:pb-32 gap-8 md:gap-16">
-
-                {/* IMAGE SIDE (Sticky) */}
-                <div className="w-full md:w-1/2 h-[50vh] md:h-[80vh] sticky top-20 md:top-24 rounded-2xl overflow-hidden bg-surface-dark shadow-2xl image-reveal">
-                    {steps.map((step, idx) => (
-                        <img
-                            key={idx}
-                            src={step.image}
-                            alt={step.title}
-                            className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]
-                ${activeStep === idx
-                                    ? 'opacity-100 scale-100 mix-blend-normal blur-none'
-                                    : 'opacity-0 scale-110 mix-blend-luminosity blur-sm pointer-events-none'
-                                }`}
-                        />
-                    ))}
-                    {/* Subtle gradient overlay to ensure the image frame looks premium */}
-                    <div className="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-50 pointer-events-none" />
+                {/* Header */}
+                <div className="mb-20 md:mb-28 text-center md:text-left">
+                    <h2 className="fade-up text-5xl md:text-7xl font-extrabold tracking-[-0.04em] leading-[0.9] mb-6">
+                        La mecánica.
+                    </h2>
+                    <p className="fade-up text-ink-muted text-xl md:text-2xl font-medium max-w-2xl">
+                        Un formato diseñado para ir directo al grano. Sin burocracia.
+                    </p>
                 </div>
 
-                {/* TEXT SIDE (Scrolling) */}
-                <div className="w-full md:w-1/2 flex flex-col pt-[10vh] md:pt-[20vh] pb-[40vh]">
-                    {steps.map((step, idx) => (
-                        <div
-                            key={idx}
-                            ref={(el) => { stepRefs.current[idx] = el; }}
-                            data-step-index={idx}
-                            className={`min-h-[60vh] md:min-h-[80vh] flex flex-col justify-center transition-all duration-700 ease-out
-                ${activeStep === idx ? 'opacity-100 translate-x-0' : 'opacity-20 md:-translate-x-4'}
-              `}
-                        >
-                            <span className="w-12 h-12 rounded-full bg-yc-orange text-white flex items-center justify-center font-extrabold text-lg tracking-widest mb-6">
-                                {step.number}
-                            </span>
-                            <h3 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-[-0.03em] leading-[1.05] mb-6">
-                                {step.title}
-                            </h3>
-                            <p className="text-ink-light text-lg md:text-xl font-medium leading-relaxed max-w-md">
-                                {step.description}
-                            </p>
-                        </div>
-                    ))}
+                {/* Timeline */}
+                <div className="relative pl-4 md:pl-0 fade-up">
+                    {/* Vertical connecting line (mobile shifted, desktop centered via layout if we wanted, but let's keep it left-aligned for reading flow) */}
+                    <div className="absolute left-[39px] md:left-[59px] top-6 bottom-6 w-px bg-border hidden sm:block" />
+
+                    <div className="flex flex-col gap-16 md:gap-24 relative z-10">
+                        {steps.map((step, idx) => (
+                            <div key={idx} className="group flex flex-col sm:flex-row gap-6 md:gap-12 items-start">
+
+                                {/* Number Circle */}
+                                <div className="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-full bg-surface-dark group-hover:bg-yc-orange group-hover:text-white transition-colors duration-300 flex items-center justify-center border-4 border-surface font-extrabold text-lg md:text-2xl tracking-tighter text-ink relative z-10">
+                                    {step.number}
+                                </div>
+
+                                {/* Content */}
+                                <div className="pt-2">
+                                    <h3 className="text-3xl md:text-4xl font-extrabold tracking-[-0.03em] mb-4 group-hover:text-yc-orange transition-colors duration-300">
+                                        {step.title}
+                                    </h3>
+                                    <p className="text-xl md:text-2xl text-ink font-semibold leading-snug mb-4">
+                                        {step.description}
+                                    </p>
+                                    <p className="text-base md:text-lg text-ink-muted font-medium leading-relaxed max-w-2xl">
+                                        {step.details}
+                                    </p>
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
             </div>
